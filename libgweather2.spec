@@ -1,16 +1,17 @@
-%define name libgweather
+%define name libgweather2
+%define oname libgweather
 %define version 2.30.3
-%define release %mkrel 5
+%define release %mkrel 6
 %define major 1
 %define libname %mklibname gweather %major
-%define develname %mklibname -d gweather
+%define develname %mklibname -d gweather %major
 %define olddevelname %mklibname -d gnome-applets
 
 Summary: GNOME Weather applet library
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
+Source0: ftp://ftp.gnome.org/pub/GNOME/sources/%{oname}/%{oname}-%{version}.tar.bz2
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.gnome.org
@@ -46,18 +47,18 @@ Obsoletes: %olddevelname < 2.21.3
 This is a library to provide Weather data to the GNOME panel applet.
 
 %prep
-%setup -q
+%setup -q -n %oname-%version
 
 %build
 %configure2_5x
 %make 
 
 %install
-rm -rf %{buildroot} %name.lang
+rm -rf %{buildroot} %oname.lang
 %makeinstall_std
-%find_lang %name
-for xmlfile in  %buildroot%_datadir/%name/Locations.*.xml; do
-echo "%lang($(basename $xmlfile|sed -e s/Locations.// -e s/.xml//)) $(echo $xmlfile | sed s!%buildroot!!)" >> %name.lang
+%find_lang %oname
+for xmlfile in  %buildroot%_datadir/%oname/Locations.*.xml; do
+echo "%lang($(basename $xmlfile|sed -e s/Locations.// -e s/.xml//)) $(echo $xmlfile | sed s!%buildroot!!)" >> %oname.lang
 done
 
 %clean
@@ -68,21 +69,14 @@ rm -rf %{buildroot}
 %preun
 %preun_uninstall_gconf_schemas gweather
 
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
 
-
-%files -f %name.lang
+%files -f %oname.lang
 %defattr(-,root,root)
 %doc AUTHORS NEWS
 %_sysconfdir/gconf/schemas/gweather.schemas
-%dir %_datadir/%name
-%_datadir/%name/locations.dtd
-%_datadir/%name/Locations.xml
+%dir %_datadir/%oname
+%_datadir/%oname/locations.dtd
+%_datadir/%oname/Locations.xml
 %_datadir/icons/gnome/*/status/weather*
 
 %files -n %libname
@@ -96,4 +90,4 @@ rm -rf %{buildroot}
 %_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
 %_includedir/*
-%_datadir/gtk-doc/html/%name
+%_datadir/gtk-doc/html/%oname
