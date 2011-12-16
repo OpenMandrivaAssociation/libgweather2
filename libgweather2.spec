@@ -1,7 +1,7 @@
 %define name libgweather2
 %define oname libgweather
 %define version 2.30.3
-%define release %mkrel 6
+%define release %mkrel 7
 %define major 1
 %define libname %mklibname gweather %major
 %define develname %mklibname -d gweather %major
@@ -24,6 +24,7 @@ BuildRequires: libxml2-utils
 #gw libtool dep:
 BuildRequires: dbus-glib-devel
 Conflicts: gnome-applets < 2.21.3
+Conflicts: %oname
 
 %description
 This is a library to provide Weather data to the GNOME panel applet.
@@ -31,7 +32,6 @@ This is a library to provide Weather data to the GNOME panel applet.
 %package -n %libname
 Group: System/Libraries
 Summary: GNOME Weather applet library
-Requires: %name >= %version
 
 %description -n %libname
 This is a library to provide Weather data to the GNOME panel applet.
