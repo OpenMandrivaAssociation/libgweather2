@@ -7,7 +7,7 @@
 Summary:	GNOME Weather applet library
 Name:		libgweather2
 Version:	2.30.3
-Release:	8
+Release:	9
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://www.gnome.org
@@ -57,8 +57,6 @@ for xmlfile in %{buildroot}%{_datadir}/%{oname}/Locations.*.xml; do
 echo "%lang($(basename $xmlfile|sed -e s/Locations.// -e s/.xml//)) $(echo $xmlfile | sed s!%{buildroot}!!)" >> %{oname}.lang
 done
 
-%post
-%post_install_gconf_schemas gweather
 %preun
 %preun_uninstall_gconf_schemas gweather
 
